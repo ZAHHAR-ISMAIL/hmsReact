@@ -28,8 +28,13 @@ import {
 
 import {
   HmsPushInstanceId,
-  HmsPushEvent
+  HmsPushMessaging,
+  RNRemoteMessage,
+  HmsLocalNotification,
+  HmsPushEvent,
 } from "@hmscore/react-native-hms-push";
+
+// import{ HmsPushEvent, RNRemoteMessage } from "@hmscore/react-native-hms-push";
 
 HmsPushInstanceId.getToken('')
       .then((result) => {
@@ -37,6 +42,38 @@ HmsPushInstanceId.getToken('')
       })
       .catch((err) => {
         alert('[getToken] Error/Exception: ' + JSON.stringify(err));
+});
+
+onRemoteMessageReceivedListener = HmsPushEvent.onRemoteMessageReceived(
+  (result) => {
+    const RNRemoteMessageObj = new RNRemoteMessage(result.msg);
+    HmsLocalNotification.localNotification({
+      [HmsLocalNotification.Attr.title]: 'DataMessage Received',
+      [HmsLocalNotification.Attr.message]:
+        RNRemoteMessageObj.getDataOfMap(),
+    });
+    console.log('onRemoteMessageReceived', result);
+  },
+);
+
+HmsPushMessaging.setBackgroundMessageHandler((dataMessage) => {
+  console.log('setBackgroundMessageHandler', dataMessage);
+  HmsLocalNotification.localNotification({
+    [HmsLocalNotification.Attr.title]: '[Headless] DataMessage Received',
+    [HmsLocalNotification.Attr.message]: new RNRemoteMessage(
+      dataMessage,
+    ).getDataOfMap(),
+  })
+    .then((result) => {
+      console.log('[Headless] DataMessage Received', result);
+    })
+    .catch((err) => {
+      console.log(
+        '[LocalNotification Default] Error/Exception: ' + JSON.stringify(err),
+      );
+    });
+
+  return Promise.resolve();
 });
 
 const Section = ({children, title}): Node => {
