@@ -34,8 +34,8 @@ import {
   HmsPushEvent,
 } from "@hmscore/react-native-hms-push";
 
-// import{ HmsPushEvent, RNRemoteMessage } from "@hmscore/react-native-hms-push";
 
+// get HCM Token 
 HmsPushInstanceId.getToken('')
       .then((result) => {
         console.log('getToken', result);
@@ -44,6 +44,7 @@ HmsPushInstanceId.getToken('')
         alert('[getToken] Error/Exception: ' + JSON.stringify(err));
 });
 
+//Read Data Notification in Foreground
 onRemoteMessageReceivedListener = HmsPushEvent.onRemoteMessageReceived(
   (result) => {
     const RNRemoteMessageObj = new RNRemoteMessage(result.msg);
@@ -56,6 +57,7 @@ onRemoteMessageReceivedListener = HmsPushEvent.onRemoteMessageReceived(
   },
 );
 
+//Read Data Notification in Background
 HmsPushMessaging.setBackgroundMessageHandler((dataMessage) => {
   console.log('setBackgroundMessageHandler', dataMessage);
   HmsLocalNotification.localNotification({
@@ -75,6 +77,19 @@ HmsPushMessaging.setBackgroundMessageHandler((dataMessage) => {
 
   return Promise.resolve();
 });
+
+// Subscribe to a Topic
+HmsPushMessaging.subscribe("KFC-00")
+.then((result) => {
+    console.log("subscribe", result);
+})
+.catch((err) => {
+    alert("[subscribe] Error/Exception: " + JSON.stringify(err));
+    console.log(err);
+});
+
+
+
 
 const Section = ({children, title}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
