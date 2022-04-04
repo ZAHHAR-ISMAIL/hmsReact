@@ -33,7 +33,14 @@ import {
   HmsLocalNotification,
   HmsPushEvent,
 } from "@hmscore/react-native-hms-push";
+import HMSMap, { MapTypes, HMSMarker  } from "@hmscore/react-native-hms-map";
 
+import HMSAnalytics from '@hmscore/react-native-hms-analytics';
+
+// Huawei Analytics instance
+HMSAnalytics.getInstance()
+    .then((res) => { console.log(JSON.stringify(res)) })
+    .catch((res) => { console.log(JSON.stringify(res)) });
 
 // get HCM Token 
 HmsPushInstanceId.getToken('')
@@ -79,7 +86,7 @@ HmsPushMessaging.setBackgroundMessageHandler((dataMessage) => {
 });
 
 // Subscribe to a Topic
-HmsPushMessaging.subscribe("KFC-00")
+HmsPushMessaging.subscribe("test-00")
 .then((result) => {
     console.log("subscribe", result);
 })
@@ -151,20 +158,33 @@ const App: () => Node = () => {
 
   return (
     <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      {/* <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} /> */}
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <Header />
+        {/* <Header /> */}
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="Step One">
-            BBBBBBBBBBBBBBB <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
+            
           </Section>
-          <Section title="See Your Changes">
+          <HMSMap
+              mapType={MapTypes.NORMAL}
+              style={{ height: 400 }}
+              camera={{ target: { latitude: 28, longitude: 16 }, zoom: 5 }}
+              myLocationEnabled={true}
+              myLocationButtonEnabled={true}
+          >
+              
+              <HMSMarker // Simple example
+                coordinate={{ latitude: 28, longitude: 16 }}
+                title="Hello Huawei Map"
+                snippet="This is a snippet!"
+              />
+          </HMSMap>
+          {/* <Section title="See Your Changes">
             <ReloadInstructions />
           </Section>
           <Section title="Debug">
@@ -173,7 +193,7 @@ const App: () => Node = () => {
           <Section title="Learn More">
             Read the docs to discover what to do next:
           </Section>
-          <LearnMoreLinks />
+          <LearnMoreLinks /> */}
         </View>
       </ScrollView>
     </SafeAreaView>

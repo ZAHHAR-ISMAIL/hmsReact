@@ -196,7 +196,11 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
+       /* Add HMS Plugins */
     implementation project(':react-native-hms-push')
+    implementation project(':react-native-hms-map')
+    implementation project(':react-native-hms-analytics')
+
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'

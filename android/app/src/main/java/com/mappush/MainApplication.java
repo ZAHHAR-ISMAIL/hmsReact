@@ -11,6 +11,8 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.huawei.hms.rn.push.HmsPushPackage;
+import com.huawei.hms.rn.map.HMSMapPackage;
+import com.huawei.hms.rn.analytics.HMSAnalyticsPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -28,6 +30,8 @@ public class MainApplication extends Application implements ReactApplication {
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
             packages.add(new HmsPushPackage());
+            packages.add(new HMSMapPackage());
+            packages.add(new HMSAnalyticsPackage());
           return packages;
         }
 

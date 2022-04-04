@@ -3,3 +3,7 @@ include ':react-native-hms-push'
 project(':react-native-hms-push').projectDir = new File(rootProject.projectDir, '../node_modules/@hmscore/react-native-hms-push/android')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
+include ':react-native-hms-map'
+project(':react-native-hms-map').projectDir = new File(rootProject.projectDir, '../node_modules/@hmscore/react-native-hms-map/android')
+include ':react-native-hms-analytics'
+project(':react-native-hms-analytics').projectDir = new File(rootProject.projectDir, '../node_modules/@hmscore/react-native-hms-analytics/android')
